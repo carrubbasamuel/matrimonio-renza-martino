@@ -64,9 +64,13 @@ const PhotoUpload: React.FC = () => {
         setUploadProgress((completedFiles / totalFiles) * 100);
       }
 
-            // Mostra messaggio di successo
+            // Mostra messaggio di successo ottimizzato per mobile
       const photoText = totalFiles === 1 ? 'foto ricevuta' : 'foto ricevute';
-      setSuccessMessage(`Grazie di cuore! ${totalFiles} ${photoText}. Andate alla galleria per vederle insieme a noi.`);
+      const shortMessage = `Grazie! ${totalFiles} ${photoText}`;
+      const fullMessage = `Grazie di cuore! ${totalFiles} ${photoText}. Andate alla galleria per vederle insieme a noi.`;
+      
+      // Usa messaggio breve su schermi piccoli
+      setSuccessMessage(window.innerWidth < 768 ? shortMessage : fullMessage);
       setShowSuccessMessage(true);
 
     } catch (err) {
@@ -213,15 +217,26 @@ const PhotoUpload: React.FC = () => {
                 sx={{
                   backgroundColor: '#8B7355',
                   color: '#FFFFFF',
-                  py: { xs: 3, sm: 3.5 },
-                  px: { xs: 5, sm: 7 },
-                  fontSize: { xs: '1.1rem', sm: '1.2rem' },
+                  py: { xs: 2.5, sm: 3, md: 3.5 },
+                  px: { xs: 4, sm: 6, md: 7 },
+                  fontSize: { xs: '0.95rem', sm: '1.1rem', md: '1.2rem' },
                   fontWeight: 500,
                   fontFamily: '"Lato", sans-serif',
                   textTransform: 'none',
                   borderRadius: 4,
-                  minWidth: { xs: '220px', sm: '280px' },
+                  minWidth: { xs: '200px', sm: '250px', md: '280px' },
+                  minHeight: { xs: '48px', sm: '52px' },
+                  whiteSpace: 'nowrap',
+                  overflow: 'hidden',
+                  textOverflow: 'ellipsis',
                   boxShadow: '0 8px 24px rgba(139, 115, 85, 0.3)',
+                  // Extra small screens
+                  '@media (max-width: 350px)': {
+                    fontSize: '0.85rem',
+                    px: 3,
+                    py: 2,
+                    minWidth: '180px'
+                  },
                   '&:hover': {
                     backgroundColor: '#6B5A45',
                     boxShadow: '0 12px 32px rgba(139, 115, 85, 0.4)',
@@ -255,10 +270,27 @@ const PhotoUpload: React.FC = () => {
           sx={{
             backgroundColor: 'rgba(139, 115, 85, 0.1)',
             color: '#8B7355',
-            fontSize: { xs: '0.9rem', sm: '1rem' },
+            fontSize: { xs: '0.85rem', sm: '0.9rem', md: '1rem' },
             fontFamily: '"Lato", sans-serif',
             border: '1px solid rgba(139, 115, 85, 0.2)',
-            borderRadius: 3
+            borderRadius: 3,
+            padding: { xs: '8px 12px', sm: '12px 16px' },
+            maxWidth: { xs: '280px', sm: '400px', md: '500px' },
+            '& .MuiAlert-message': {
+              lineHeight: 1.4,
+              wordBreak: 'break-word',
+              hyphens: 'auto',
+              overflow: 'hidden'
+            },
+            '& .MuiAlert-icon': {
+              fontSize: { xs: '1rem', sm: '1.2rem' }
+            },
+            // Extra small screens
+            '@media (max-width: 350px)': {
+              fontSize: '0.8rem',
+              padding: '6px 10px',
+              maxWidth: '260px'
+            }
           }}
         >
           {successMessage}
