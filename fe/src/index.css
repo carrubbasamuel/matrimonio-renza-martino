@@ -1,0 +1,91 @@
+/* Ottimizzazioni globali per mobile */
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  /* Previene zoom sui form inputs in iOS */
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: 'Lato', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  /* Migliora il touch su iOS */
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+  /* Previene il bounce scroll su iOS */
+  overscroll-behavior: none;
+}
+
+/* Ottimizzazioni per il text input sui form */
+input, textarea, select {
+  font-size: 16px; /* Previene zoom automatico su iOS */
+}
+
+/* Migliora le transizioni sui touch */
+button, a, [role="button"] {
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Scroll migliore per container */
+.scrollable {
+  -webkit-overflow-scrolling: touch;
+  scroll-behavior: smooth;
+}
+
+/* Per dispositivi con notch */
+@supports (padding: max(0px)) {
+  .safe-area-top {
+    padding-top: max(1rem, env(safe-area-inset-top));
+  }
+  
+  .safe-area-bottom {
+    padding-bottom: max(1rem, env(safe-area-inset-bottom));
+  }
+}
+
+/* Miglioramenti per la grid responsiva */
+@media (max-width: 600px) {
+  .photo-grid {
+    gap: 8px !important;
+  }
+  
+  .photo-item {
+    border-radius: 4px !important;
+  }
+}
+
+/* Miglioramenti per il loading */
+.skeleton-mobile {
+  animation: skeleton-loading 1.2s ease-in-out infinite;
+}
+
+@keyframes skeleton-loading {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.4;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+/* Nasconde scrollbar ma mantiene funzionalità */
+.hide-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
